@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Areas",
+    "\\Areas\\LOC_Country",
+    "\\Areas\\LOC_Country\\Controllers",
+    "\\Areas\\LOC_Country\\Models",
+    "\\Areas\\LOC_Country\\Views",
+    "\\Areas\\LOC_Country\\Views\\Country",
+    "\\Views",
+    "\\Views\\Home",
+    "\\Views\\Shared"
+  ],
+  "SelectedNode": "\\Areas\\LOC_Country\\Views\\Country\\CountryList.cshtml",
+  "PreviewInSolutionExplorer": false
+}

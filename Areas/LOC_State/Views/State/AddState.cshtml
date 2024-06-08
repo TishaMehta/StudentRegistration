@@ -1,0 +1,55 @@
+﻿@using StudentRegistration.Areas.LOC_Country.Models;
+@{
+    ViewData["Title"] = "Add Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model StudentRegistration.Areas.LOC_State.Models.LOC_StateModel
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<h3>State Add/Edit</h3>
+<div class="col-lg-6">
+
+    <div class="card">
+        <div class="card-body">
+                <style>
+                    .form-group label::before {
+                        content: "*";
+                        color: red;
+                    }
+                </style>
+            <!-- Vertical Form -->
+            <form class="row g-3" method="post" asp-area="LOC_State" asp-controller="State" asp-action="Save">
+                    <div class="form-group">
+                    <label>State Name</label>
+                    <input asp-for="StateName" type="text" placeholder="State Name" class="form-control" /><br />
+                    <span class="text-danger" asp-validation-for="StateName"></span>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail4" class="form-label">State Code</label>
+                    <input asp-for="StateCode" type="text" placeholder="State Code" class="form-control"/><br />
+                    <span class="text-danger" asp-validation-for="StateCode"></span>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail4" class="form-label">Country Name</label>
+                    <select asp-for="CountryID" class="form-control">
+                        <option>Select Country</option>
+                        @foreach (LOC_CountryModel lc in ViewBag.LI)
+                        {
+                            <option value="@lc.CountryID">@lc.CountryName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <input type="hidden" name="StateID" value="@Model.StateID" />
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form><!-- Vertical Form -->
+            </div>
+        </div>
+    </div>
+

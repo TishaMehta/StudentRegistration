@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Add Branch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model StudentRegistration.Areas.MST_Branch.Models.MST_BranchModel
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<h3>Branch Add/Edit</h3>
+<div class="col-lg-6">
+
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Vertical Form -->
+            <form class="row g-3" method="post" asp-area="MST_Branch" asp-controller="Branch" asp-action="Save">
+                <input type="hidden" asp-for="BranchID" />
+
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Branch Name</label>
+                    <input type="text" class="form-control" asp-for="BranchName" placeholder="Branch Name">
+                    <span class="text-danger" asp-validation-for="BranchName"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Branch Code</label>
+                    <input type="text" class="form-control" asp-for="BranchCode" placeholder="Branch code">
+                    <span class="text-danger" asp-validation-for="BranchCode"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form><!-- Vertical Form -->
+
+        </div>
+    </div>
+

@@ -1,0 +1,165 @@
+﻿@{
+    ViewData["Title"] = "List Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Data
+@model DataTable
+
+
+<h3>Student List</h3>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-24">
+
+            <div class="table-responsive">
+                <div class="tablex">
+                    <div class="container-fluid">
+                        <a class="navbar-brand">Student Search</a>
+                        <form class="d-flex w-75" role="search" asp-area="LOC_Student" asp-controller="Student" asp-action="StudentList">
+                            <input class="form-control me-2" type="text" placeholder="Student Name" aria-label="Search" name="StudentName">
+                            <input class="form-control me-2" type="text" placeholder="Branch Name" aria-label="Search" name="BranchName">
+                            <input class="form-control me-2" type="text" placeholder="City Name" aria-label="Search" name="CityName">
+                            <input class="form-control me-2" type="text" placeholder="MobileNoStudent" aria-label="Search" name="MobileNoStudent">
+                        </form>  
+                       <form class="d-flex w-75" role="search" asp-area="LOC_Student" asp-controller="Student" asp-action="StudentList">
+
+                            <input class="form-control me-2" type="text" placeholder="MobileNoFather" aria-label="Search" name="MobileNoFather">
+                            <input class="form-control me-2" type="text" placeholder="Age" aria-label="Search" name="Age">
+                            <input class="form-control me-2" type="text" placeholder="Address" aria-label="Search" name="Address">
+                            <input class="form-control me-2" type="text" placeholder="Gender" aria-label="Search" name="Gender">
+                       </form>    
+                       <form class="d-flex w-75" role="search" asp-area="LOC_Student" asp-controller="Student" asp-action="StudentList">
+
+                                <input class="form-control me-2" type="text" placeholder="Email" aria-label="Search" name="Email">
+                            <input class="form-control me-2" type="text" placeholder="BirthDate" aria-label="Search" name="BirthDate">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class=" btn btn-primary col-md-3" asp-area="LOC_Student" asp-controller="Student" asp-action="AddStudent">Add Student</a>
+
+                        </form>
+                        </div>
+
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">StudentID</th>
+                                 <th scope="col">StudentName</th>
+                                <th scope="col">MobileNoStudent</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">MobileNoFather</th>
+                                <th scope="col">BranchName</th>
+                                <th scope="col">CityName</th>
+
+                                <th scope="col">Address</th>
+                                <th scope="col">BirthDate</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Gender</th>
+                                 <th scope="col">Password</th>
+                                 <th scope="col">IsActive</th>
+                              <th scope="col">Created</th>
+                                <th scope="col">Modified</th>
+
+                                <th scope="col">Delete</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DataRow dr in Model.Rows)
+                            {
+                                <tr>
+                                    <td>@dr["StudentID"]</td>
+                                    <td>@dr["StudentName"]</td>
+                                    <td>@dr["MobileNoStudent"]</td>
+                                    <td>@dr["Email"]</td>
+                                    <td>@dr["MobileNoFather"]</td>
+                                    <td>@dr["BranchName"]</td>
+                                    <td>@dr["CityName"]</td>
+                                    <td>@dr["Address"]</td>
+                                    <td>@dr["BirthDate"]</td>
+                                    <td>@dr["Age"]</td>
+                                    <td>@dr["Gender"]</td>
+                                    <td>@dr["Password"]</td>
+
+                                     <td>@dr["IsActive"]</td>
+
+                                    <td>@Convert.ToDateTime(dr["Created"])</td>
+                                    <td>@Convert.ToDateTime(dr["Modified"])</td>
+                                    <td>
+                                        <form method="post" asp-area="LOC_Student" asp-controller="Student" asp-action="DeleteStudent">
+                                            <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
+                                           <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-area="LOC_Student" asp-controller="Student" asp-action="AddStudent">
+                                            <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
+                                            <button type="submit" class="btn btn-outline-warning">Edit</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section Scripts
+    {
+    <script>
+
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        function fun1() {
+            if (confirm("Are you sure you want to delete?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        function stateChange() {
+            var CountryID = $("#CountryID").val();
+
+            if (CountryID !== "") {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+                $.ajax(
+                    {
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "@Url.Action("DropDownByCountry", "LOC_City")" + "?&CountryID=" + CountryID,
+                        data: {},
+                        dataType: "json",
+                        success: function (Result) {
+                            $.each(Result,
+                                function (key, value) {
+                                    $("#StateID").append($("<option></option>").val(value.stateID).html(value.stateName));
+                                });
+                        },
+                        error: function (r) {
+                            alert("Error while loading combobox.");
+                        }
+                    });
+            }
+            else {
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+            }
+        }
+    </script>
+     }

@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Add Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model StudentRegistration.Areas.LOC_Country.Models.LOC_CountryModel
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<h3>Country Add/Edit</h3>
+<div class="col-lg-6">
+
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Vertical Form -->
+            <form class="row g-3" method="post" asp-area="LOC_Country" asp-controller="Country" asp-action="Save">
+                <div class=" form-group">
+                    <style>
+                        .form-group label::before {
+                            content: "*";
+                            color: red;
+                        }
+                    </style>
+                    <input type="hidden" name="CountryID" asp-for="CountryID" />
+
+                    <label>Country Name</label>
+                    <input type="text" class="form-control" asp-for="CountryName" placeholder="Country Name">
+
+                    <span class="text-danger" asp-validation-for="CountryName"></span>
+
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail4" class="form-label">Country Code</label>
+                    <input type="text" class="form-control" asp-for="CountryCode" placeholder="Country Code">
+                    <span class="text-danger" asp-validation-for="CountryCode"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form><!-- Vertical Form -->
+
+        </div>
+    </div>
+

@@ -1,0 +1,122 @@
+﻿
+
+@{
+    ViewData["Title"] = "Add PAGE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Data;
+@model StudentRegistration.Areas.LOC_City.Models.LOC_CityModel;
+@using StudentRegistration.Areas.LOC_Country.Models;
+@using StudentRegistration.Areas.LOC_State.Models;
+@using StudentRegistration.Areas.LOC_City.Models;
+
+<div class="Card">
+    <div class="Card-body">
+        <style>
+            .form-group label::before {
+                content: "*";
+                color: red;
+            }
+        </style>
+<form class="row g-3"  method="post" asp-area="LOC_City" asp-controller="City" asp-action="Save">
+    <input type="hidden" asp-for="CityID"/>
+    <table class="table">
+        <tr>
+            <td>
+                City Name :
+            </td>
+            <td>
+                <input asp-for="CityName"  type="text" class="form-group"/>
+                <span asp-validation-for="CityName" class="text-danger"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                City Code :
+            </td>
+            <td>
+                <input asp-for="CityCode" type = "text" />
+                <span asp-validation-for="CityCode" class="text-danger"></span>
+            </td>
+        </tr>
+                <tr>
+                    <td>
+                        Country Name:
+                    </td>
+                    <td>
+
+
+                        <select id="selectedCountry" asp-for="CountryID" onchange="funOnStateChange()">
+                            <option>select country</option>
+                            @foreach (LOC_CountryDropDownModel lc in ViewBag.CountryList)
+                            {
+                                <option value="@lc.CountryID">@lc.CountryName</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </td>
+                </tr>
+        <tr>
+            <td>
+                State Name :
+            </td>
+            <td>
+
+
+                <select id="selectedState" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateList,"StateID","StateName"))">
+                    
+
+                    <option>Select State</option>
+                </select>
+            </td>
+        </tr>
+        
+    </table>
+    <!-- No Labels Form -->
+    
+       
+    <!-- End No Labels Form -->
+   
+
+</form>
+</div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function funOnStateChange() {
+            var CountryID = $("#selectedCountry").val();
+            console.log(CountryID);
+            $("#selectedState").empty();
+            $("#selectedState").append($("<option></option>").val("").html("Select State"));
+            if (CountryID !== "") {
+                $.ajax(
+                    {
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "@Url.Action("Index","City")" + "?&CountryID=" + CountryID,
+                        data: {},
+                        dataType: "json",
+                        success: function (Result) {
+
+                            $.each(Result, function (key, value) {
+
+                                $("#selectedState").append($("<option></option>").val(value.stateID).html(value.stateName));
+                            });
+                        },
+                        error: function (error) {
+                            alert(error);
+                        }
+
+                    }
+                )
+            }
+        }
+    </script>
+}

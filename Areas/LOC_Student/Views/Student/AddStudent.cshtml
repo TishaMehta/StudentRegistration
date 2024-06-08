@@ -1,0 +1,104 @@
+﻿@using StudentRegistration.Areas.LOC_Student.Models;
+@using StudentRegistration.Areas.MST_Branch.Models;
+@{
+    ViewData["Title"] = "Add Student";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model StudentRegistration.Areas.LOC_Student.Models.LOC_StudentModel
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<h3>Student Add/Edit</h3>
+<div class="col-lg-6">
+
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Vertical Form -->
+            <form class="row g-3" method="post" asp-area="LOC_Student" asp-controller="Student" asp-action="Save">
+                <input type="hidden" asp-for="StudentID" />
+
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Student Name</label>
+                    <input type="text" class="form-control" asp-for="StudentName" placeholder="Student Name">
+                    <span class="text-danger" asp-validation-for="StudentName"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Age</label>
+                    <input type="text" class="form-control" asp-for="Age" placeholder="Age">
+                    <span class="text-danger" asp-validation-for="Age"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">MobileNoStudent</label>
+                    <input type="text" class="form-control" asp-for="MobileNoStudent" placeholder="MobileNoStudent">
+                    <span class="text-danger" asp-validation-for="MobileNoStudent"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputNanme4" class="form-label">Email</label>
+                    <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+                    <span class="text-danger" asp-validation-for="Email"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">MobileNoFather</label>
+                    <input type="text" class="form-control" asp-for="MobileNoFather" placeholder="MobileNoFather">
+                    <span class="text-danger" asp-validation-for="MobileNoFather"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Address</label>
+                    <input type="text" class="form-control" asp-for="Address" placeholder="Address">
+                    <span class="text-danger" asp-validation-for="Address"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">BirthDate</label>
+                    <input type="text" class="form-control" asp-for="BirthDate" placeholder="BirthDate">
+                    <span class="text-danger" asp-validation-for="BirthDate"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">IsActive</label>
+                    <input type="text" class="form-control" asp-for="IsActive" placeholder="IsActive">
+                    <span class="text-danger" asp-validation-for="IsActive"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Gender</label>
+                    <input type="text" class="form-control" asp-for="Gender" placeholder="Gender">
+                    <span class="text-danger" asp-validation-for="Gender"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Password</label>
+                    <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+                    <span class="text-danger" asp-validation-for="Password"></span>
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">Branch Name</label>
+                    <select asp-for="BranchID" class="form-control">
+                        <option>Select Branch</option>
+                        @foreach (MST_BranchDropDownModel ls in ViewBag.BranchList)
+                        {
+                            <option value="@ls.BranchID">@ls.BranchName</option>
+                        }
+                    </select>
+
+                </div>
+                <div class="col-12">
+                    <label for="inputEmail4" class="form-label">City Name</label>
+                    <select asp-for="CityID" class="form-control">
+                        <option>Select CityName</option>
+                        @foreach (LOC_CityDropDownModel ls in ViewBag.CityList)
+                        {
+                            <option value="@ls.CityID">@ls.CityName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="text-center">
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form><!-- Vertical Form -->
+
+        </div>
+    </div>
+

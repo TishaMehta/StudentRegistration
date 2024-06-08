@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "List Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Data
+@model DataTable
+
+<h3>State List</h3>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <a class="navbar-brand">State Search</a>
+                        <form class="d-flex w-75" role="search" asp-area="LOC_State" asp-controller="State" asp-action="StateList">
+                            <input class="form-control me-2" type="text" placeholder="State Name" aria-label="Search" name="StateName">
+                            <input class="form-control me-2" type="text" placeholder="State Code" aria-label="Search" name="StateCode">
+                            <input class="form-control me-2" type="text" placeholder="Country Name" aria-label="Search" name="CountryName">
+
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <a class=" btn btn-primary col-md-3" asp-area="LOC_State" asp-controller="State" asp-action="AddState">Add State</a>
+
+                        </form>
+                    </div>
+
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col">StateID</th>
+                                <th scope="col">StateName</th>
+                                <th scope="col">StateCode</th>
+                                <th scope="col">CountryName</th>
+                                <th scope="col">Add Date</th>
+                                <th scope="col">MOdifi Date</th>
+@*                                 <th scope="col">CityCount</th>
+ *@                                <th scope="col">Delete</th>
+                                <th scope="col">Edit</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DataRow dr in Model.Rows)
+                            {
+                                <tr>
+                                    <td>@dr["StateID"]</td>
+                                    <td>@dr["StateName"]</td>
+                                    <td>@dr["Statecode"]</td>
+
+                                    <td>@dr["CountryName"]</td>
+                                    <td>@Convert.ToDateTime(dr["Created"])</td>
+                                    <td>@Convert.ToDateTime(dr["Modified"])</td>
+@*                                     <td>@dr["CityCount"]</td>
+ *@                                    <td>
+                                        <form method="post" asp-area="LOC_State" asp-controller="State" asp-action="DeleteState">
+                                            <input type="hidden" name="StateID" value="@Convert.ToInt32(dr["StateID"])" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-area="LOC_State" asp-controller="State" asp-action="AddState">
+                                            <input type="hidden" name="StateID" value="@Convert.ToInt32(dr["StateID"])" />
+                                            <button type="submit" class="btn btn-outline-warning">Edit</button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
